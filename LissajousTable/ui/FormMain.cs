@@ -48,6 +48,8 @@ namespace LissajousTable.ui
 
 		private void init()
 		{
+			initUiActions();
+
 			_curves = new LCurve[ _ROWS, _COLUMNS ];
 
 			for ( var i = 0; i < _ROWS; ++i )
@@ -57,6 +59,15 @@ namespace LissajousTable.ui
 					_curves[ i, j ] = new LCurve();
 				}
 			}
+		}
+
+		private void initUiActions()
+		{
+			_speed.X = ( float ) nud_speed_x.Value;
+			_speed.Y = ( float ) nud_speed_y.Value;
+
+			nud_speed_x.ValueChanged += ( sender, args ) => _speed.X = ( float ) nud_speed_x.Value;
+			nud_speed_y.ValueChanged += ( sender, args ) => _speed.Y = ( float ) nud_speed_y.Value;
 		}
 
 		private void draw( Graphics graphics )
@@ -109,8 +120,8 @@ namespace LissajousTable.ui
 					, _DIAMETER
 					, _DIAMETER );
 
-				float x = _RADIUS * ( float ) Math.Cos( _angle * ( j + _speed.Y ) - _HALF_PI )
-					, y = _RADIUS * ( float ) Math.Sin( _angle * ( j + _speed.Y ) - _HALF_PI );
+				float x = _RADIUS * ( float ) Math.Cos( _angle * ( j + _speed.X ) - _HALF_PI )
+					, y = _RADIUS * ( float ) Math.Sin( _angle * ( j + _speed.X ) - _HALF_PI );
 
 				graphics.FillEllipse(
 					Brushes.White
